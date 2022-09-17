@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="c195.c195.LoginController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.c195.LoginController">
+   <children>
+      <Button fx:id="login" layoutX="483.0" layoutY="183.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="97.0" text="Login" />
+      <Label fx:id="locationLabel" layoutX="47.0" layoutY="183.0" prefHeight="35.0" prefWidth="64.0" text="Location" underline="true" />
+      <Label fx:id="errorLabel" layoutX="270.0" layoutY="318.0" text="Error Codes" textFill="RED" />
+      <TextField fx:id="username" layoutX="190.0" layoutY="152.0" prefHeight="25.0" prefWidth="221.0" />
+      <TextField fx:id="password" layoutX="190.0" layoutY="218.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label layoutX="190.0" layoutY="135.0" text="Username" />
+      <Label layoutX="190.0" layoutY="200.0" text="Password" />
+      <Label layoutX="47.0" layoutY="169.0" text="Login Location: " />
+   </children>
+</AnchorPane>
