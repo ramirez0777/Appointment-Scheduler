@@ -38,7 +38,6 @@ public class MainMenuController implements Initializable {
 
         //Customer brian = new Customer(1, "brian", "street", 1, "zip", "801");
         customers.setCellValueFactory(new PropertyValueFactory<>("name"));
-
         location.setCellValueFactory(new PropertyValueFactory<>("division"));
         customersTable.setItems(Customers.getAllCustomers());
     }
@@ -71,6 +70,7 @@ public class MainMenuController implements Initializable {
         Customer selectedCustomer = (Customer) customersTable.getSelectionModel().getSelectedItem();
         if(selectedCustomer == null){
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer to update");
+            alert.showAndWait();
         }
         else {
             UpdateCustomerController.index = Customers.getAllCustomers().indexOf(selectedCustomer);
@@ -80,9 +80,15 @@ public class MainMenuController implements Initializable {
     }
     public void toViewCustomer(ActionEvent actionEvent) throws IOException {
         Customer selectedCustomer = (Customer) customersTable.getSelectionModel().getSelectedItem();
-        ViewCustomerController.currentCustomer = selectedCustomer;
-        LoginScreen.changeScreen("viewcustomer");
 
+        if(selectedCustomer == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a customer to view");
+            alert.showAndWait();
+        }
+        else{
+            ViewCustomerController.currentCustomer = selectedCustomer;
+            LoginScreen.changeScreen("viewcustomer");
+        }
     }
     public void toReports(ActionEvent actionEvent) throws IOException {
         LoginScreen.changeScreen("reports");

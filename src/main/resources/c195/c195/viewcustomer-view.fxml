@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="c195.c195.ViewCustomerController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="493.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.c195.ViewCustomerController">
+   <children>
+      <Label fx:id="customerName" layoutX="287.0" layoutY="45.0" text="Label">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TableView fx:id="appointmentsTable" layoutX="35.0" layoutY="89.0" prefHeight="319.0" prefWidth="686.0">
+        <columns>
+          <TableColumn fx:id="titleColumn" prefWidth="75.0" text="Title" />
+          <TableColumn fx:id="descriptionColumn" prefWidth="110.0" text="Description" />
+            <TableColumn fx:id="locationColumn" prefWidth="68.0" text="Location" />
+            <TableColumn fx:id="contactColumn" prefWidth="76.0" text="Contact" />
+            <TableColumn fx:id="typeColumn" prefWidth="73.0" text="Type" />
+            <TableColumn fx:id="startColumn" prefWidth="143.0" text="Start Time" />
+            <TableColumn fx:id="endColumn" minWidth="0.0" prefWidth="140.0" text="End Time" />
+        </columns>
+      </TableView>
+      <Button layoutX="120.0" layoutY="422.0" mnemonicParsing="false" text="Add New Appointment" />
+      <Button layoutX="317.0" layoutY="422.0" mnemonicParsing="false" text="Update Appointment" />
+      <Button layoutX="518.0" layoutY="422.0" mnemonicParsing="false" text="Delete Appointment" />
+      <Button layoutX="56.0" layoutY="33.0" mnemonicParsing="false" onAction="#toMainMenu" text="Back" />
+   </children>
 </AnchorPane>

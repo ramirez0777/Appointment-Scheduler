@@ -1,7 +1,11 @@
 package helper;
 
+import c195.c195.Appointment;
 import c195.c195.Customer;
 import c195.c195.LoginScreen;
+import c195.c195.ViewCustomerController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import main.Customers;
 
 
@@ -43,6 +47,18 @@ public abstract class Queries {
             Customers.addCustomer(currentCustomer);
         }
 
+    }
+
+    public static void gatherCustomerAppointments(int customerId) throws SQLException{
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = " + customerId + ";";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()){
+            Appointment currentAppointment = new Appointment(results.getInt("Appointment_ID"), results.getString("Title"), results.getString("Description"), results.getString("Location"), results.getInt("Contact_ID"), results.getString("Type"), results.getString("Start"), results.getString("End"), results.getInt("Customer_ID"), results.getInt("User_ID"));
+            ViewCustomerController.currentCustomer.addAppointment(currentAppointment);
+
+        }
     }
 
     public static int getCustomerId(String name) throws SQLException {
@@ -112,11 +128,22 @@ public abstract class Queries {
         return country;
     }
 
+    public static String getContactName(int contactId) throws SQLException {
+        String contactName = null;
+        String sql = "SELECT * FROM client_schedule.contacts WHERE Contact_ID = " + contactId;
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()) {
+            contactName =  results.getString("Contact_Name");
+        }
+        return contactName;
+    }
+
     public static void insertCustomer(String name, String streetAddress, String zip, String phone, String dateTime, int division) throws SQLException {
         String sql = "INSERT INTO client_schedule.customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES ('" + name + "', '" + streetAddress + "', '" + zip + "', '" + phone + "', '" + dateTime + "', '" + LoginScreen.getCurrentUser() + "', '" + dateTime + "', '" + LoginScreen.getCurrentUser() + "', " + division + ")";
-        System.out.println(sql);
+        //System.out.println(sql);
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-
         ps.execute();
     }
 
@@ -134,6 +161,7 @@ public abstract class Queries {
         ps.execute();
 
     }
+
 
 
 }

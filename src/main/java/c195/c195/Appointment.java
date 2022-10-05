@@ -1,26 +1,31 @@
 package c195.c195;
 
+import helper.Queries;
+
+import java.sql.SQLException;
+
 public class Appointment {
     private int id;
     private String title;
     private String description;
     private String location;
     private String contact;
+    private int contactId;
     private String type;
     private String startTime;
     private String endTime;
     private int customerId;
     private int userId;
 
-    public Appointment(int id, String title, String description, String location, String contact, String type, String startTime, String endTime, int customerId, int userId){
+    public Appointment(int id, String title, String description, String location, int contactId, String type, String startTime, String endTime, int customerId, int userId) throws SQLException {
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
-        this.contact = contact;
+        setContact(contactId);
         this.type = type;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        setStartTime(startTime);
+        setEndTime(endTime);
         this.customerId = customerId;
         this.userId = userId;
     }
@@ -77,20 +82,22 @@ public class Appointment {
         this.location = location;
     }
 
-    public void setContact(String contact){
-        this.contact = contact;
+    public void setContact(int contactId) throws SQLException {
+
+        this.contactId = contactId;
+        this.contact = Queries.getContactName(contactId);
     }
 
     public void setType(String type){
         this.type = type;
     }
 
-    public boolean setStartTime(String startTime){
-        return false;
+    public void setStartTime(String startTime) {
+        this.startTime = LoginScreen.convertTimeToLocal(startTime);
     }
 
-    public boolean setEndTime(String endTime){
-        return false;
+    public void setEndTime(String endTime){
+        this.endTime = LoginScreen.convertTimeToLocal(endTime);
     }
 
     public void setUserId(int userId){

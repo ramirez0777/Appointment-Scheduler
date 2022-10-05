@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.SQLException;
 
 public class Customer {
-    private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    private ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private int id;
     private String name;
     private String streetAddress;
@@ -75,11 +75,12 @@ public class Customer {
     }
 
     public ObservableList<Appointment> getAppointments(){
-        return appointments;
+        return allAppointments;
     }
 
-    public boolean addAppointment(Appointment newAppointment){
-        return false;
+    public void addAppointment(Appointment newAppointment){
+        allAppointments.add(newAppointment);
+        System.out.println(this.getName() + "'s appointment: " + this.getAppointments().size());
     }
 
     public boolean deleteAppointment(Appointment selectedAppointment){
