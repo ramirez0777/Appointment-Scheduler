@@ -1,24 +1,32 @@
 package c195.c195;
 
+import helper.Queries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 
 public class Customer {
     private ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     private int id;
     private String name;
     private String streetAddress;
-    private int division;
+    private String division;
+    private int divisionId;
     private String postalCode;
     private String phone;
 
-    public Customer(int id, String name, String streetAddress, int division, String postalCode, String phone){
+    public Customer(int id, String name, String streetAddress, int division, String postalCode, String phone) throws SQLException {
         this.id = id;
         this.name = name;
         this.streetAddress = streetAddress;
-        this.division = division;
+
         this.postalCode = postalCode;
         this.phone = phone;
+        this.divisionId = division;
+
+        //This needs to be changed to the name instead of the id, so we can store it as a String that way gets take it back as that, but when saving it we cross reference the table with the id
+        setDivision(division);
     }
 
     public int getCustomerId(){
@@ -33,7 +41,7 @@ public class Customer {
         return this.streetAddress;
     }
 
-    public int getDivision(){
+    public String getDivision(){
         return this.division;
     }
 
@@ -53,8 +61,9 @@ public class Customer {
         this.streetAddress = streetAddress;
     }
 
-    public void setDivision(int division){
-        this.division = division;
+    public void setDivision(int division) throws SQLException {
+        this.divisionId = division;
+        this.division = Queries.searchDivision(division, "division");
     }
 
     public void setPostalCode(String postalCode){
@@ -75,5 +84,9 @@ public class Customer {
 
     public boolean deleteAppointment(Appointment selectedAppointment){
         return false;
+    }
+
+    public int getDivisionId(){
+        return this.divisionId;
     }
 }

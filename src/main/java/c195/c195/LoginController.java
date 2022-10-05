@@ -42,10 +42,11 @@ public class LoginController implements Initializable {
 
     public void login() throws SQLException, IOException {
         if(Queries.verifyLogin(username.getText(), password.getText())){
+            LoginScreen.setCurrentUser(username.getText());
             Stage stage = LoginScreen.stage;
             FXMLLoader fxmlLoader = new FXMLLoader(LoginScreen.class.getResource("mainmenu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-            stage.setTitle("Main Menu!");
+            stage.setTitle("Main Menu");
             stage.setScene(scene);
             stage.show();
 
