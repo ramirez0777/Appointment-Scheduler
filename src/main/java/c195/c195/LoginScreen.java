@@ -73,7 +73,6 @@ public class LoginScreen extends Application {
     public static String getCurrentTimeUTC(){
         ZonedDateTime myDateObj = ZonedDateTime.now(ZoneId.of("UTC"));
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String currentDateTime = myDateObj.format(myFormatObj);
-        return currentDateTime;
+        return myDateObj.format(myFormatObj);
     }
 }
