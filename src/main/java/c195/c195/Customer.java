@@ -90,4 +90,8 @@ public class Customer {
     public int getDivisionId(){
         return this.divisionId;
     }
+
+    public void clearAppointments(){
+        allAppointments.clear();
+    }
 }

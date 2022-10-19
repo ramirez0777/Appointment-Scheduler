@@ -21,9 +21,9 @@
             <TableColumn fx:id="endColumn" minWidth="0.0" prefWidth="140.0" text="End Time" />
         </columns>
       </TableView>
-      <Button layoutX="120.0" layoutY="422.0" mnemonicParsing="false" text="Add New Appointment" />
+      <Button layoutX="120.0" layoutY="422.0" mnemonicParsing="false" onAction="#addAppointment" text="Add New Appointment" />
       <Button layoutX="317.0" layoutY="422.0" mnemonicParsing="false" text="Update Appointment" />
-      <Button layoutX="518.0" layoutY="422.0" mnemonicParsing="false" text="Delete Appointment" />
+      <Button layoutX="518.0" layoutY="422.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete Appointment" />
       <Button layoutX="56.0" layoutY="33.0" mnemonicParsing="false" onAction="#toMainMenu" text="Back" />
    </children>
 </AnchorPane>

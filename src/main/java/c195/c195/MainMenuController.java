@@ -42,24 +42,24 @@ public class MainMenuController implements Initializable {
         customersTable.setItems(Customers.getAllCustomers());
     }
 
-    public void deleteCustomer() throws SQLException {
+    public void deleteCustomer() throws SQLException, IOException {
         Customer selectedCustomer = (Customer) customersTable.getSelectionModel().getSelectedItem();
 
-        Alert confirmDeletion = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this customer?");
+        Alert confirmDeletion = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this customer? This will also delete all their appointments");
         Optional<ButtonType> confirm = confirmDeletion.showAndWait();
         if(!(confirm.isPresent() && confirm.get() == ButtonType.OK)){
             return;
         }
 
-        if(Customers.deleteCustomer(selectedCustomer)){
-            Queries.deleteCustomer(selectedCustomer.getCustomerId());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, selectedCustomer.getName() + " has been deleted");
-            alert.showAndWait();
+        for(Appointment currentAppointment : selectedCustomer.getAppointments()){
+            Queries.deleteAppointment(currentAppointment.getAppointmentId());
         }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Customer was not deleted (Customers with appointments cannot be deleted)");
-            alert.showAndWait();
-        }
+
+        Queries.deleteCustomer(selectedCustomer.getCustomerId());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, selectedCustomer.getName() + " has been deleted");
+        alert.showAndWait();
+        LoginScreen.changeScreen("mainmenu");
     }
 
     public void toNewCustomer() throws IOException {

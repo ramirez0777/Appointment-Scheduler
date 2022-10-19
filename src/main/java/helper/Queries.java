@@ -1,9 +1,6 @@
 package helper;
 
-import c195.c195.Appointment;
-import c195.c195.Customer;
-import c195.c195.LoginScreen;
-import c195.c195.ViewCustomerController;
+import c195.c195.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.Customers;
@@ -12,6 +9,9 @@ import main.Customers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public abstract class Queries {
@@ -27,6 +27,7 @@ public abstract class Queries {
             if(username.equals(results.getString("User_Name"))){
                 if(password.equals(results.getString("Password"))){
                     verified = true;
+                    LoginScreen.setUserId(results.getInt("User_ID"));
                     break;
                 }
             }
@@ -59,6 +60,18 @@ public abstract class Queries {
             ViewCustomerController.currentCustomer.addAppointment(currentAppointment);
 
         }
+    }
+
+    public static ArrayList<String> gatherContacts() throws SQLException {
+        ArrayList<String> contacts = new ArrayList<String>();
+        String sql = "SELECT * FROM client_schedule.contacts";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()){
+            contacts.add(results.getString("Contact_Name"));
+        }
+        return contacts;
     }
 
     public static int getCustomerId(String name) throws SQLException {
@@ -140,6 +153,19 @@ public abstract class Queries {
         return contactName;
     }
 
+    public static int getContactId(String contactName) throws SQLException{
+        int contactId = 0;
+        String sql = "SELECT * FROM client_schedule.contacts WHERE Contact_Name = '" + contactName + "'";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()){
+            contactId = results.getInt("Contact_ID");
+        }
+
+        return contactId;
+    }
+
     public static void insertCustomer(String name, String streetAddress, String zip, String phone, String dateTime, int division) throws SQLException {
         String sql = "INSERT INTO client_schedule.customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES ('" + name + "', '" + streetAddress + "', '" + zip + "', '" + phone + "', '" + dateTime + "', '" + LoginScreen.getCurrentUser() + "', '" + dateTime + "', '" + LoginScreen.getCurrentUser() + "', " + division + ")";
         //System.out.println(sql);
@@ -147,8 +173,20 @@ public abstract class Queries {
         ps.execute();
     }
 
+    public static void insertAppointment(String title, String description, String location, String type, String startTime, String endTime, int contactId) throws SQLException{
+        String sql = "INSERT INTO client_schedule.appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES ('" + title + "', '" + description + "', '" + location + "', '" + type + "', '" + startTime + "', '" + endTime + "', '" + LoginScreen.getCurrentTimeUTC() + "', '" + LoginScreen.getCurrentUser() + "', '" + LoginScreen.getCurrentTimeUTC() + "', '" + LoginScreen.getCurrentUser() + "', " +  ViewCustomerController.currentCustomer.getCustomerId() + ", " + LoginScreen.getUserId() + ", " + contactId + ");";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.execute();
+    }
+
     public static void deleteCustomer(int id) throws SQLException {
         String sql = "DELETE FROM client_schedule.customers WHERE (Customer_ID = " + id + ");";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.execute();
+    }
+
+    public static void deleteAppointment(int id) throws SQLException{
+        String sql = "DELETE FROM client_schedule.appointments WHERE (Appointment_ID = " + id + ");";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.execute();
     }
@@ -162,6 +200,72 @@ public abstract class Queries {
 
     }
 
+    public static boolean overlappingAppointments(LocalDateTime start, LocalDateTime end) throws SQLException {
+        boolean isOverlapping = false;
 
+        ZonedDateTime startZDT = ZonedDateTime.of(start, ZoneId.systemDefault());
+        ZonedDateTime endZDT = ZonedDateTime.of(end, ZoneId.systemDefault());
+
+        startZDT = LoginScreen.convertTimeToUTCZDT(startZDT);
+        endZDT = LoginScreen.convertTimeToUTCZDT(endZDT);
+
+
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = " + ViewCustomerController.currentCustomer.getCustomerId();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()){
+            String parsableStart = results.getString("Start").replace(" ", "T");
+            String parsableEnd = results.getString("End").replace(" ", "T");
+            ZonedDateTime dbStart = ZonedDateTime.of(LocalDateTime.parse(parsableStart), ZoneId.of("UTC"));
+            ZonedDateTime dbEnd = ZonedDateTime.of(LocalDateTime.parse(parsableEnd), ZoneId.of("UTC"));
+
+            if( (startZDT.isAfter(dbStart) && startZDT.isBefore(dbEnd)) || (endZDT.isBefore(dbEnd) && endZDT.isAfter(dbStart))){
+                isOverlapping = true;
+            }
+            if( (dbStart.isAfter(startZDT) && dbStart.isBefore(endZDT)) || (dbEnd.isBefore(endZDT) && dbEnd.isAfter(startZDT)) ){
+                isOverlapping = true;
+            }
+            if(startZDT.isEqual(dbStart) || endZDT.isEqual(dbEnd)){
+                isOverlapping = true;
+            }
+        }
+
+        return isOverlapping;
+    }
+
+    public static boolean overlappingAppointments(LocalDateTime start, LocalDateTime end, int appointmentId) throws SQLException {
+        boolean isOverlapping = false;
+
+        ZonedDateTime startZDT = ZonedDateTime.of(start, ZoneId.systemDefault());
+        ZonedDateTime endZDT = ZonedDateTime.of(end, ZoneId.systemDefault());
+
+        startZDT = LoginScreen.convertTimeToUTCZDT(startZDT);
+        endZDT = LoginScreen.convertTimeToUTCZDT(endZDT);
+
+
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = " + ViewCustomerController.currentCustomer.getCustomerId() + "AND Appointment_ID != " + UpdateAppointmentController.appointmentId;
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()){
+            String parsableStart = results.getString("Start").replace(" ", "T");
+            String parsableEnd = results.getString("End").replace(" ", "T");
+            ZonedDateTime dbStart = ZonedDateTime.of(LocalDateTime.parse(parsableStart), ZoneId.of("UTC"));
+            ZonedDateTime dbEnd = ZonedDateTime.of(LocalDateTime.parse(parsableEnd), ZoneId.of("UTC"));
+
+            if( (startZDT.isAfter(dbStart) && startZDT.isBefore(dbEnd)) || (endZDT.isBefore(dbEnd) && endZDT.isAfter(dbStart))){
+                isOverlapping = true;
+            }
+            if( (dbStart.isAfter(startZDT) && dbStart.isBefore(endZDT)) || (dbEnd.isBefore(endZDT) && dbEnd.isAfter(startZDT)) ){
+                isOverlapping = true;
+            }
+            if(startZDT.isEqual(dbStart) || endZDT.isEqual(dbEnd)){
+                isOverlapping = true;
+            }
+        }
+
+        return isOverlapping;
+    }
 
 }
