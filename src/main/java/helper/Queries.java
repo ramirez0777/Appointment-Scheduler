@@ -244,7 +244,7 @@ public abstract class Queries {
         endZDT = LoginScreen.convertTimeToUTCZDT(endZDT);
 
 
-        String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = " + ViewCustomerController.currentCustomer.getCustomerId() + "AND Appointment_ID != " + UpdateAppointmentController.appointmentId;
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = " + ViewCustomerController.currentCustomer.getCustomerId() + "AND Appointment_ID != " + appointmentId;
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet results = ps.executeQuery();
 
