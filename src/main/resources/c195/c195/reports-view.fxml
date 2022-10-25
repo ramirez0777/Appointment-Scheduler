@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="c195.c195.ReportsController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.c195.ReportsController">
+   <children>
+      <TabPane layoutY="58.0" prefHeight="441.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Appointment Totals">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="typeTable" layoutX="42.0" layoutY="66.0" prefHeight="308.0" prefWidth="319.0">
+                          <columns>
+                            <TableColumn fx:id="typeColumn" prefWidth="218.0" text="Type" />
+                            <TableColumn fx:id="typeTotalColumn" minWidth="0.0" prefWidth="100.0" text="Total" />
+                          </columns>
+                        </TableView>
+                        <TableView fx:id="monthTable" layoutX="444.0" layoutY="64.0" prefHeight="307.0" prefWidth="311.0">
+                          <columns>
+                            <TableColumn fx:id="monthColumn" prefWidth="210.0" text="Month" />
+                            <TableColumn fx:id="monthTotalColumn" prefWidth="100.0" text="Total" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="144.0" layoutY="33.0" text="Totals by Type">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="535.0" layoutY="33.0" text="Totals by Month">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Contact Schedules">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="contactTable" layoutX="41.0" layoutY="43.0" prefHeight="327.0" prefWidth="721.0">
+                          <columns>
+                            <TableColumn fx:id="idColumn" prefWidth="101.0" text="Appointment ID" />
+                            <TableColumn fx:id="titleColumn" prefWidth="75.0" text="Title" />
+                              <TableColumn fx:id="appTypeColumn" prefWidth="74.0" text="Type" />
+                              <TableColumn fx:id="descriptionColumn" prefWidth="163.0" text="Description" />
+                              <TableColumn fx:id="startColumn" prefWidth="107.0" text="Start Time" />
+                              <TableColumn fx:id="endColumn" prefWidth="118.0" text="End Time" />
+                              <TableColumn fx:id="customerIdColumn" prefWidth="82.0" text="Customer ID" />
+                          </columns>
+                        </TableView>
+                        <ComboBox fx:id="contact" layoutX="327.0" layoutY="14.0" onAction="#appointmentsByContact" prefWidth="150.0" promptText="Select Contact" />
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Other Report">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Label layoutX="362.0" layoutY="14.0" text="Reports">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button layoutX="641.0" layoutY="17.0" mnemonicParsing="false" onAction="#toMainMenu" text="Back" />
+   </children>
 </AnchorPane>

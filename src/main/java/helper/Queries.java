@@ -50,6 +50,32 @@ public abstract class Queries {
 
     }
 
+    public static ObservableList<Appointment> gatherAppointments() throws SQLException {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM client_schedule.appointments";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()){
+            Appointment currentAppointment = new Appointment(results.getInt("Appointment_ID"), results.getString("Title"), results.getString("Description"), results.getString("Location"), results.getInt("Contact_ID"), results.getString("Type"), results.getString("Start"), results.getString("End"), results.getInt("Customer_ID"), results.getInt("User_ID"));
+            appointments.add(currentAppointment);
+        }
+        return appointments;
+    }
+
+    public static ObservableList<Appointment> gatherContactAppointments(int contactId) throws SQLException{
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Contact_ID = " + contactId;
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()){
+            Appointment currentAppointment = new Appointment(results.getInt("Appointment_ID"), results.getString("Title"), results.getString("Description"), results.getString("Location"), results.getInt("Contact_ID"), results.getString("Type"), results.getString("Start"), results.getString("End"), results.getInt("Customer_ID"), results.getInt("User_ID"));
+            appointments.add(currentAppointment);
+        }
+        return appointments;
+    }
+
     public static void gatherCustomerAppointments(int customerId) throws SQLException{
         String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = " + customerId + ";";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -179,6 +205,13 @@ public abstract class Queries {
         ps.execute();
     }
 
+    public static void updateAppointment(String title, String description, String location, String type, String startTime, String endTime, int contactId) throws SQLException{
+        String sql = "UPDATE client_schedule.appointments SET Title = '" + title + "', Description = '" + description + "', Location = '" + location + "', Type = '" + type + "', Start = '" + startTime + "', End = '" + endTime + "', Last_Update = '" + LoginScreen.getCurrentTimeUTC() + "', Last_Updated_By = '" + LoginScreen.getCurrentUser() + "', Contact_ID = " + contactId + " WHERE Appointment_ID = " + UpdateAppointmentController.currentAppointment.getAppointmentId();
+        System.out.println(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.execute();
+    }
+
     public static void deleteCustomer(int id) throws SQLException {
         String sql = "DELETE FROM client_schedule.customers WHERE (Customer_ID = " + id + ");";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -193,7 +226,7 @@ public abstract class Queries {
 
     public static void updateCustomer(int id, String name, String streetAddress, String zip, String phone, String dateTime, int division) throws SQLException {
         String sql = "UPDATE client_schedule.customers SET Customer_Name = '" + name + "', Address = '" + streetAddress + "', Postal_Code = '" + zip + "', Phone = '" + phone + "', Last_Update = '" + dateTime + "', Last_Updated_By = '" + LoginScreen.getCurrentUser() +"', Division_ID = " + division + " WHERE Customer_ID = " + id;
-        System.out.println(sql);
+        //System.out.println(sql);
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
 
         ps.execute();
@@ -244,7 +277,8 @@ public abstract class Queries {
         endZDT = LoginScreen.convertTimeToUTCZDT(endZDT);
 
 
-        String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = " + ViewCustomerController.currentCustomer.getCustomerId() + "AND Appointment_ID != " + appointmentId;
+        String sql = "SELECT * FROM client_schedule.appointments WHERE Customer_ID = " + ViewCustomerController.currentCustomer.getCustomerId() + " AND Appointment_ID != " + appointmentId;
+
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet results = ps.executeQuery();
 

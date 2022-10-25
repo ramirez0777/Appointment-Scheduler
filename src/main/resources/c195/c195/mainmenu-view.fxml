@@ -23,14 +23,16 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Button mnemonicParsing="false" onAction="#toNewCustomer" prefHeight="25.0" prefWidth="150.0" text="Insert New Customer" textAlignment="CENTER" />
                   <Button mnemonicParsing="false" onAction="#toUpdateCustomer" onDragDetected="#toUpdateCustomer" prefHeight="25.0" prefWidth="169.0" text="Update Customer Info" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#toViewCustomer" prefHeight="25.0" prefWidth="190.0" text="View Customer Appointments" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#toViewCustomer" prefHeight="25.0" prefWidth="204.0" text="View/Edit Customer Appointments" GridPane.rowIndex="2" />
                   <Button mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="25.0" prefWidth="108.0" text="Delete Customer" GridPane.rowIndex="3" />
-                  <Button mnemonicParsing="false" onAction="#toReports" prefHeight="25.0" prefWidth="105.0" text="Reports" GridPane.rowIndex="4" />
+                  <Button mnemonicParsing="false" onAction="#toReports" prefHeight="25.0" prefWidth="105.0" text="Reports" GridPane.rowIndex="5" />
+                  <Button mnemonicParsing="false" onAction="#toAllAppointments" text="View All Appointments" GridPane.rowIndex="4" />
                </children>
                <HBox.margin>
                   <Insets left="75.0" />

@@ -25,8 +25,6 @@ public class MainMenuController implements Initializable {
     public TableColumn customers;
     public TableColumn location;
 
-    private static boolean firstTime = true;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -92,5 +90,9 @@ public class MainMenuController implements Initializable {
     }
     public void toReports(ActionEvent actionEvent) throws IOException {
         LoginScreen.changeScreen("reports");
+    }
+
+    public void toAllAppointments() throws IOException{
+        LoginScreen.changeScreen("allappointments");
     }
 }

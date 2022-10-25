@@ -61,7 +61,7 @@ public class ViewCustomerController implements Initializable {
         }
 
         Queries.deleteAppointment(selectedAppointment.getAppointmentId());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Appointment has been deleted.");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Appointment has been deleted. Type: " + selectedAppointment.getType() + ". Appointment ID: " + selectedAppointment.getAppointmentId());
         alert.showAndWait();
         LoginScreen.changeScreen("viewcustomer");
     }
@@ -72,5 +72,16 @@ public class ViewCustomerController implements Initializable {
     }
     public void toMainMenu() throws IOException {
         LoginScreen.changeScreen("mainmenu");
+    }
+
+    public void updateAppointment() throws IOException{
+        if(appointmentsTable.getSelectionModel().getSelectedItem() == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an appointment to update");
+            alert.showAndWait();
+            return;
+        }
+
+        UpdateAppointmentController.currentAppointment = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
+        LoginScreen.changeScreen("updateappointment");
     }
 }

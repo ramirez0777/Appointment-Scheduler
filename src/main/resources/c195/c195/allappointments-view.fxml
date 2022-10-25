@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.c195.AllappointmentsController">
+   <children>
+      <Label layoutX="27.0" layoutY="20.0" text="All Appointments">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <TableView fx:id="appointmentTable" layoutX="14.0" layoutY="60.0" prefHeight="424.0" prefWidth="774.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="34.0" text="ID" />
+            <TableColumn fx:id="titleColumn" prefWidth="71.0" text="Title" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="120.0" text="Description" />
+          <TableColumn fx:id="locationColumn" prefWidth="75.0" text="Location" />
+            <TableColumn fx:id="contactColumn" prefWidth="75.0" text="Contact" />
+            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
+            <TableColumn fx:id="startColumn" prefWidth="94.0" text="Start Time" />
+            <TableColumn fx:id="endColumn" prefWidth="99.0" text="End Time" />
+            <TableColumn fx:id="customerIdColumn" prefWidth="78.0" text="Customer ID" />
+            <TableColumn fx:id="userIdColumn" prefWidth="52.0" text="User ID" />
+        </columns>
+      </TableView>
+      <RadioButton fx:id="all" layoutX="283.0" layoutY="28.0" mnemonicParsing="false" onAction="#filterAppointments" selected="true" text="View All">
+         <toggleGroup>
+            <ToggleGroup fx:id="view" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="weekly" layoutX="400.0" layoutY="28.0" mnemonicParsing="false" onAction="#filterAppointments" text="Weekly View" toggleGroup="$view" />
+      <RadioButton fx:id="monthly" layoutX="525.0" layoutY="28.0" mnemonicParsing="false" onAction="#filterAppointments" text="Monthly View" toggleGroup="$view" />
+      <Button layoutX="672.0" layoutY="16.0" mnemonicParsing="false" onAction="#toMainMenu" text="Main Menu" />
+   </children>
+</AnchorPane>

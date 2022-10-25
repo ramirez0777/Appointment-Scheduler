@@ -3,6 +3,7 @@ package c195.c195;
 import helper.Queries;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class Appointment {
     private int id;
@@ -16,6 +17,8 @@ public class Appointment {
     private String endTime;
     private int customerId;
     private int userId;
+    private LocalDateTime startLDT;
+    private LocalDateTime endLDT;
 
     public Appointment(int id, String title, String description, String location, int contactId, String type, String startTime, String endTime, int customerId, int userId) throws SQLException {
         this.id = id;
@@ -28,11 +31,14 @@ public class Appointment {
         setEndTime(endTime);
         this.customerId = customerId;
         this.userId = userId;
+        this.startLDT = LoginScreen.convertoLDT(this.startTime);
+        this.endLDT = LoginScreen.convertoLDT(this.endTime);
     }
 
     public int getAppointmentId(){
         return this.id;
     }
+    public int getId(){return this.id;}
 
     public String getTitle(){
         return this.title;
@@ -69,6 +75,9 @@ public class Appointment {
     public int getUserId(){
         return this.userId;
     }
+
+    public LocalDateTime getStartLDT(){return this.startLDT;}
+    public LocalDateTime getEndLDT(){return this.endLDT;}
 
     public void setTitle(String title){
         this.title = title;

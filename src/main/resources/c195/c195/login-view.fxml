@@ -3,15 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.c195.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.c195.LoginController">
    <children>
-      <Button fx:id="login" layoutX="483.0" layoutY="183.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="97.0" text="Login" />
-      <Label fx:id="locationLabel" layoutX="47.0" layoutY="183.0" prefHeight="35.0" prefWidth="78.0" text="Location" textAlignment="CENTER" underline="true" />
-      <Label fx:id="errorLabel" layoutX="270.0" layoutY="318.0" text="Error Codes" textFill="RED" />
-      <TextField fx:id="username" layoutX="190.0" layoutY="152.0" prefHeight="25.0" prefWidth="221.0" />
-      <TextField fx:id="password" layoutX="190.0" layoutY="218.0" prefHeight="25.0" prefWidth="221.0" />
-      <Label layoutX="190.0" layoutY="135.0" text="Username" />
-      <Label layoutX="190.0" layoutY="200.0" text="Password" />
-      <Label layoutX="47.0" layoutY="169.0" text="Login Location: " />
+      <Button fx:id="login" layoutX="640.0" layoutY="233.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="97.0" text="Login" />
+      <Label fx:id="location" layoutX="83.0" layoutY="240.0" prefHeight="35.0" prefWidth="78.0" text="Location" textAlignment="CENTER" underline="true" />
+      <TextField fx:id="username" layoutX="290.0" layoutY="213.0" prefHeight="25.0" prefWidth="221.0" />
+      <TextField fx:id="password" layoutX="290.0" layoutY="279.0" prefHeight="25.0" prefWidth="221.0" />
+      <Label fx:id="usernameLabel" layoutX="290.0" layoutY="196.0" text="Username" />
+      <Label fx:id="passwordLabel" layoutX="290.0" layoutY="261.0" text="Password" />
+      <Label fx:id="locationLabel" layoutX="83.0" layoutY="226.0" text="Login Location: " />
    </children>
 </AnchorPane>

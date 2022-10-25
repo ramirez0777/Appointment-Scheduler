@@ -65,6 +65,12 @@ public class LoginScreen extends Application {
             case "newappointment":
                 stage.setTitle("Create New Appointment for " + ViewCustomerController.currentCustomer.getName());
                 break;
+            case "updateappointment":
+                stage.setTitle("Update " + ViewCustomerController.currentCustomer.getName() + "'s appointment");
+                break;
+            case "allappointments":
+                stage.setTitle("All Appointments");
+                break;
         }
         stage.setScene(scene);
         stage.show();
@@ -160,14 +166,18 @@ public class LoginScreen extends Application {
 
 
 
-        if(start.toLocalTime().isBefore(openTime) || end.toLocalTime().isAfter(closeTime) || endZDT.isBefore(startZDT) || startZDT.isAfter(endZDT) || startZDT.isBefore(ZonedDateTime.now(ZoneId.of("America/New_York"))) || endZDT.getDayOfMonth() - startZDT.getDayOfMonth() > 1){
+        if(start.toLocalTime().isBefore(openTime) || end.toLocalTime().isAfter(closeTime) || endZDT.isBefore(startZDT) || startZDT.isAfter(endZDT) || startZDT.isBefore(ZonedDateTime.now(ZoneId.of("America/New_York")))){
             open = false;
+        }
+
+        if(endZDT.getDayOfMonth() - startZDT.getDayOfMonth() > 1){
+            open = false;
+            System.out.println("Longer than a day appoinitment");
         }
 
         if(startZDT.getDayOfWeek() == DayOfWeek.SATURDAY || startZDT.getDayOfWeek() == DayOfWeek.SUNDAY || endZDT.getDayOfWeek() == DayOfWeek.SATURDAY || endZDT.getDayOfWeek() == DayOfWeek.SUNDAY){
             open = false;
         }
-
 
         return open;
     }

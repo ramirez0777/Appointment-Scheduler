@@ -24,9 +24,9 @@
               </rowConstraints>
                <children>
                   <TextField disable="true" promptText="Appointment ID Auto-Generated" />
-                  <TextField fx:id="title" promptText="Title" GridPane.rowIndex="1" />
-                  <TextField fx:id="description" promptText="Description" GridPane.rowIndex="2" />
-                  <TextField fx:id="location" promptText="Location" GridPane.rowIndex="3" />
+                  <TextField fx:id="titleField" promptText="Title" GridPane.rowIndex="1" />
+                  <TextField fx:id="descriptionField" promptText="Description" GridPane.rowIndex="2" />
+                  <TextField fx:id="locationField" promptText="Location" GridPane.rowIndex="3" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
                      <children>
                         <Label alignment="TOP_LEFT" text="Contact Name: " textAlignment="CENTER">
@@ -34,16 +34,18 @@
                               <Insets right="20.0" top="15.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox fx:id="contact" prefWidth="150.0">
+                        <ComboBox fx:id="contacts" prefWidth="150.0">
                            <HBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="15.0" />
                            </HBox.margin>
-                        </ChoiceBox>
+                        </ComboBox>
                      </children>
                   </HBox>
-                  <TextField fx:id="type" promptText="Type of Meeting" GridPane.rowIndex="5" />
-                  <DatePicker GridPane.rowIndex="6" />
-                  <DatePicker GridPane.rowIndex="7" />
+                  <TextField fx:id="typeField" promptText="Type of Meeting" GridPane.rowIndex="5" />
+                  <DatePicker fx:id="startDate" GridPane.rowIndex="6" />
+                  <DatePicker fx:id="endDate" GridPane.rowIndex="7" />
+                  <ComboBox fx:id="startTime" prefWidth="150.0" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <ComboBox fx:id="endTime" prefWidth="150.0" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
                </children>
             </GridPane>
             <GridPane prefHeight="494.0" prefWidth="322.0">
@@ -59,8 +61,8 @@
                   <Insets left="30.0" />
                </HBox.margin>
                <children>
-                  <Button mnemonicParsing="false" onAction="#addAppointment" text="Save Appointment" />
-                  <Button mnemonicParsing="false" onAction="#toViewCustomer" text="Back" textAlignment="CENTER" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#addAppointment" text="Save Appointment" GridPane.halignment="CENTER" />
+                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#toViewCustomer" text="Back" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
