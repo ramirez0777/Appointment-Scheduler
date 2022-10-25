@@ -1,6 +1,8 @@
 package c195.c195;
 
 import helper.Queries;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +13,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import main.Customers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,20 +25,19 @@ public class MainMenuController implements Initializable {
     public TableView customersTable;
     public TableColumn customers;
     public TableColumn location;
+    public ObservableList<Customer> customersList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            Customers.clearCustomers();
-            Queries.gatherCustomers();
+            customersList = Queries.gatherCustomers();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
         //Customer brian = new Customer(1, "brian", "street", 1, "zip", "801");
         customers.setCellValueFactory(new PropertyValueFactory<>("name"));
         location.setCellValueFactory(new PropertyValueFactory<>("division"));
-        customersTable.setItems(Customers.getAllCustomers());
+        customersTable.setItems(customersList);
     }
 
     public void deleteCustomer() throws SQLException, IOException {
@@ -71,7 +71,6 @@ public class MainMenuController implements Initializable {
             alert.showAndWait();
         }
         else {
-            UpdateCustomerController.index = Customers.getAllCustomers().indexOf(selectedCustomer);
             UpdateCustomerController.currentCustomer = selectedCustomer;
             LoginScreen.changeScreen("updatecustomer");
         }

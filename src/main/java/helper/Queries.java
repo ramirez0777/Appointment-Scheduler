@@ -3,7 +3,7 @@ package helper;
 import c195.c195.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.Customers;
+
 
 
 import java.sql.PreparedStatement;
@@ -37,17 +37,17 @@ public abstract class Queries {
         return verified;
     }
 
-    public static void gatherCustomers() throws SQLException{
-
+    public static ObservableList<Customer> gatherCustomers() throws SQLException{
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
         String sql = "SELECT * FROM client_schedule.customers";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet results = ps.executeQuery();
 
         while(results.next()){
             Customer currentCustomer = new Customer(results.getInt("Customer_ID"), results.getString("Customer_Name"), results.getString("Address"), results.getInt("Division_ID"), results.getString("Postal_Code"), results.getString("Phone"));
-            Customers.addCustomer(currentCustomer);
+            customers.add(currentCustomer);
         }
-
+        return customers;
     }
 
     public static ObservableList<Appointment> gatherAppointments() throws SQLException {
