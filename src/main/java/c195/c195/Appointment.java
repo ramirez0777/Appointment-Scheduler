@@ -17,6 +17,7 @@ public class Appointment {
     private String endTime;
     private int customerId;
     private int userId;
+    private String userName;
     private LocalDateTime startLDT;
     private LocalDateTime endLDT;
 
@@ -31,6 +32,7 @@ public class Appointment {
         setEndTime(endTime);
         this.customerId = customerId;
         this.userId = userId;
+        setUserName();
         this.startLDT = LoginScreen.convertoLDT(this.startTime);
         this.endLDT = LoginScreen.convertoLDT(this.endTime);
     }
@@ -75,6 +77,9 @@ public class Appointment {
     public int getUserId(){
         return this.userId;
     }
+    public String getUserName(){
+        return this.userName;
+    }
 
     public LocalDateTime getStartLDT(){return this.startLDT;}
     public LocalDateTime getEndLDT(){return this.endLDT;}
@@ -111,5 +116,8 @@ public class Appointment {
 
     public void setUserId(int userId){
         this.userId = userId;
+    }
+    public void setUserName() throws SQLException {
+        this.userName = Queries.getUsername(this.userId);
     }
 }

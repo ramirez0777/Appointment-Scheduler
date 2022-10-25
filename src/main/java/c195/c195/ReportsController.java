@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 
 public class ReportsController implements Initializable {
 
-    public TableView contactTable, typeTable, monthTable;
+    public TableView userTable, contactTable, typeTable, monthTable;
     public ComboBox contact;
-    public TableColumn typeColumn, typeTotalColumn, monthColumn, monthTotalColumn, idColumn, titleColumn, appTypeColumn, descriptionColumn, startColumn, endColumn, customerIdColumn;
+    public TableColumn userColumn, userTotalColumn, typeColumn, typeTotalColumn, monthColumn, monthTotalColumn, idColumn, titleColumn, appTypeColumn, descriptionColumn, startColumn, endColumn, customerIdColumn;
     ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
 
@@ -49,7 +49,6 @@ public class ReportsController implements Initializable {
         ObservableList<Month> months = FXCollections.observableArrayList();
 
         for(Appointment currentAppointment : appointments){
-
             boolean typeExisted = false;
             boolean monthExisted = false;
 
@@ -94,6 +93,29 @@ public class ReportsController implements Initializable {
         monthColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
         monthTotalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
         monthTable.setItems(months);
+
+        ObservableList<userTotals> users = FXCollections.observableArrayList();
+        for(Appointment currentAppointment : appointments){
+            boolean userExisted = false;
+            if(users.size() == 0){
+                users.add(new userTotals(currentAppointment.getUserName()));
+            }
+            else{
+                for(int i = 0; i < users.size(); i++){
+                    if(users.get(i).getUsername().equals(currentAppointment.getUserName())){
+                        users.get(i).incrementTotal();
+                        userExisted = true;
+                    }
+                }
+                if(!userExisted){
+                    users.add(new userTotals(currentAppointment.getUserName()));
+                }
+            }
+        }
+
+        userColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        userTotalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        userTable.setItems(users);
     }
 
     public void appointmentsByContact() throws SQLException {

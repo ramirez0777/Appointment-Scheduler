@@ -192,6 +192,19 @@ public abstract class Queries {
         return contactId;
     }
 
+    public static String getUsername(int id) throws SQLException{
+        String username = null;
+        String sql = "SELECT * FROM client_schedule.users WHERE User_ID = " + id;
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet results = ps.executeQuery();
+
+        while(results.next()){
+            username = results.getString("User_Name");
+        }
+
+        return username;
+    }
+
     public static void insertCustomer(String name, String streetAddress, String zip, String phone, String dateTime, int division) throws SQLException {
         String sql = "INSERT INTO client_schedule.customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES ('" + name + "', '" + streetAddress + "', '" + zip + "', '" + phone + "', '" + dateTime + "', '" + LoginScreen.getCurrentUser() + "', '" + dateTime + "', '" + LoginScreen.getCurrentUser() + "', " + division + ")";
         //System.out.println(sql);
