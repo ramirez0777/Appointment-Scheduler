@@ -25,8 +25,6 @@ public class LoginScreen extends Application {
     public void start(Stage stage) throws IOException {
         LoginScreen.stage = stage;
         changeScreen("login");
-        System.out.println("Time zone: " + ZoneId.systemDefault());
-        System.out.println(System.getProperty("javafx.runtime.version"));
     }
 
     /**When main is run it starts a connection to the Database. Connection is closed when program is closed. */
@@ -211,17 +209,30 @@ public class LoginScreen extends Application {
         LocalTime openTime = LocalTime.of(8, 0);
         LocalTime closeTime = LocalTime.of(22, 0);
 
-
-
-        if(start.toLocalTime().isBefore(openTime) || end.toLocalTime().isAfter(closeTime) || endZDT.isBefore(startZDT) || startZDT.isAfter(endZDT) || startZDT.isBefore(ZonedDateTime.now(ZoneId.of("America/New_York")))){
+        //Checks if appointment is in company open time
+        if(start.toLocalTime().isBefore(openTime) || end.toLocalTime().isAfter(closeTime) || endZDT.isBefore(startZDT) || startZDT.isAfter(endZDT)){
             open = false;
         }
 
+        //Checks if appointment is being made in the past.
+        /** Disabling for performance assesment
+        if(startZDT.isBefore(ZonedDateTime.now(ZoneId.of("America/New_York"))) || endZDT.isBefore(ZonedDateTime.now(ZoneId.of("America/New_York")))){
+            open = false;
+        }
+         */
+
+        //Checks if appointment end time is before start time
+        if(endZDT.isBefore(startZDT)){
+            open = false;
+        }
+
+        //Checks if appointment is longer than a day
         if(endZDT.getDayOfMonth() - startZDT.getDayOfMonth() > 1){
             open = false;
             System.out.println("Longer than a day appoinitment");
         }
 
+        //Checks if it's on a weekend
         if(startZDT.getDayOfWeek() == DayOfWeek.SATURDAY || startZDT.getDayOfWeek() == DayOfWeek.SUNDAY || endZDT.getDayOfWeek() == DayOfWeek.SATURDAY || endZDT.getDayOfWeek() == DayOfWeek.SUNDAY){
             open = false;
         }

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -40,10 +41,9 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         rb = ResourceBundle.getBundle("region", Locale.getDefault());
-        System.out.println(rb.getString("error"));
         language = Locale.getDefault().getLanguage();
         //System.out.println("Default: " + Locale.getDefault().getLanguage());
-        location.setText(Locale.getDefault().getCountry());
+        location.setText(String.valueOf(ZoneId.systemDefault()));
 
         if(language.equals("fr")){
             locationLabel.setText(rb.getString("location"));
