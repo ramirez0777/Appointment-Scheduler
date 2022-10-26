@@ -15,17 +15,28 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**This class is the controller for the login page. This page displays a login form, the users locale, and is translated to French if needed. Also shows errors for logins and updates the login activity file.*/
 public class LoginController implements Initializable {
+    /**"Login Location" label.*/
     public Label locationLabel;
+    /**"Username" label.*/
     public Label usernameLabel;
+    /**"Password label.*/
     public Label passwordLabel;
+    /**Label for location*/
     public Label location;
+    /**Textfield for user to type in username*/
     public TextField username;
+    /**Textfield for user to type in password*/
     public TextField password;
+    /**Login button*/
     public Button login;
+    /**Resource bundle to translate labels and errors*/
     private ResourceBundle rb;
+    /**Default Language of users PC*/
     public String language;
 
+    /**The class implements Intializable. When initialized it detects your region and translates the login page to French if needed.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         rb = ResourceBundle.getBundle("region", Locale.getDefault());
@@ -44,6 +55,7 @@ public class LoginController implements Initializable {
 
     };
 
+    /**When the Login button is pressed it checks with the database if your information is correct. It logs the username, current time in UTC, and if was successful or unsucessful. If it was succesful it sends yo to the all appointments page. If not it shows an error.*/
     public void login() throws SQLException, IOException {
         FileWriter fw = new FileWriter("src/login_activity.txt", true);
         PrintWriter updateLoginAttempts = new PrintWriter(fw);

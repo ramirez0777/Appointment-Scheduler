@@ -17,23 +17,40 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/** This class is the controller for the allappointments-view page. It displays all appointments from the Database and allows you to sort by week and month.*/
 public class AllappointmentsController implements Initializable {
+    /**List of all appointments.*/
     ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    /**Table to display appointments.*/
     public TableView<Appointment> appointmentTable;
+    /**Column to display appointment ids*/
     public TableColumn idColumn;
+    /**Column to display appointment titles*/
     public TableColumn titleColumn;
+    /**Column to display appointment descrioptions*/
     public TableColumn descriptionColumn;
+    /**Column to display appointment locations*/
     public TableColumn locationColumn;
+    /**Column to display appointment appointmentss*/
     public TableColumn contactColumn;
+    /**Column to display appointment typess*/
     public TableColumn typeColumn;
+    /**Column to display appointment start times*/
     public TableColumn startColumn;
+    /**Column to display appointment end times*/
     public TableColumn endColumn;
+    /**Column to display appointment customer ids*/
     public TableColumn customerIdColumn;
+    /**Column to display appointment user ids*/
     public TableColumn userIdColumn;
+    /**Radio button to filter table to show all appointments.*/
     public RadioButton all;
+    /**Radio button to filter table by month.*/
     public RadioButton monthly;
+    /**Radio button to filter table by week.*/
     public RadioButton weekly;
 
+    /**This class implements Initializable. Before the page is loaded a notification pops up and shows whether or not there is an appointment within 15 minutes of getting to the page. It then fills in the Table with information from appointments received from the Database. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -73,10 +90,12 @@ public class AllappointmentsController implements Initializable {
         appointmentTable.setItems(appointments);
     }
 
+    /** This method is ran when the user click on the Main Menu Button. It changes the screen to the Main Menu screen. */
     public void toMainMenu() throws IOException {
         LoginScreen.changeScreen("mainmenu");
     }
 
+    /** This method is used to filter the appointments by showing all, a weekly view which shows the current days appointments + 7 days, and a monthly view depending on the current month the user is in. These are selected by radio buttons and All is shown by default. This method uses a Lambda expression. This Lambda expression sorts through the appointments and returns an ObservableList of appointments that are the same month as the month the user is currently in. The weeklyh sort is done by checking if the appointment is in between the current time and current time plus 7 days.  */
     public void filterAppointments(){
         ObservableList<Appointment> appointmentsFiltered = FXCollections.observableArrayList();
         if(monthly.isSelected()) {

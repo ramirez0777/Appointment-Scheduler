@@ -6,31 +6,41 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.util.converter.LocalDateTimeStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**Controller for the update appointment screen. Fills in appointment details and allows user to update appointment information*/
 public class UpdateAppointmentController implements Initializable {
+    /**Selection box for user to choose start time.*/
     public ComboBox startTime;
+    /**Selection box for user to choose end time.*/
     public ComboBox endTime;
+    /**Selection box for user to choose contact name.*/
     public ComboBox contacts;
+    /**List of times that are available throughout the day.*/
     public ArrayList<String>  availableTimes = new ArrayList<String>();
+    /**Date picker for user to select start date.*/
     public DatePicker startDate;
+    /**Date picker for user to select end date.*/
     public DatePicker endDate;
+    /**Text field for user to type in the title of appointment.*/
     public TextField titleField;
+    /**Text field for user to type in the description of appointment.*/
     public TextField descriptionField;
+    /**Text field for user to type in the location of appointment.*/
     public TextField locationField;
+    /**text fiel for user to type in the type of appointment.*/
     public TextField typeField;
+    /**Current appointment that is being updated. This is set by the view customer screen when moving over to this screen.*/
     public static Appointment currentAppointment;
+
+    /**Fills in availableTimes array with times of the day in 15 minute intervals*/
     public void fillInTimes() {
         for (int i = 1; i <= 24; i++) {
             String time = "" + i + ":00";
@@ -45,6 +55,7 @@ public class UpdateAppointmentController implements Initializable {
     }
 
 
+    /**When scren is started it fills in all the fields from information of the appointment*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fillInTimes();
@@ -83,10 +94,12 @@ public class UpdateAppointmentController implements Initializable {
         endTime.getSelectionModel().select(endTimeString);
     }
 
+    /**Changes screen back to the view customer screen*/
     public void toViewCustomer() throws IOException{
         LoginScreen.changeScreen("viewcustomer");
     }
 
+    /**Runs when save Appointment button is clicked. Verifies all fields are filled in and valid. If not shows an error. If everything is correct it updates the appointment in the database and switches screen back to the view customer screen.*/
     public void addAppointment() throws IOException, SQLException{
         if(titleField.getText().equals("") || descriptionField.getText().equals("") || locationField.getText().equals("") || typeField.getText().equals("") || contacts.getSelectionModel().isEmpty() || startTime.getSelectionModel().isEmpty() || endTime.getSelectionModel().isEmpty() || endDate.getValue() == null || startDate.getValue() == null){
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please fill in all fields");
