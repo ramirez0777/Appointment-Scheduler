@@ -1,4 +1,4 @@
-package c195.c195;
+package c195.c195.displayed;
 
 import helper.Queries;
 import javafx.collections.FXCollections;

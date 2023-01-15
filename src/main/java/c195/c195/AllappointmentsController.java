@@ -1,5 +1,6 @@
 package c195.c195;
 
+import c195.c195.displayed.Appointment;
 import helper.Queries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

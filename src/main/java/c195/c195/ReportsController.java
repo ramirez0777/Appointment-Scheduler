@@ -1,7 +1,10 @@
 package c195.c195;
 
+import c195.c195.displayed.Appointment;
+import c195.c195.reported.Month;
+import c195.c195.reported.Type;
+import c195.c195.reported.UserTotals;
 import helper.Queries;
-import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -13,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -101,11 +103,11 @@ public class ReportsController implements Initializable {
         monthTable.setItems(months);
 
         //report3
-        ObservableList<userTotals> users = FXCollections.observableArrayList();
+        ObservableList<UserTotals> users = FXCollections.observableArrayList();
         for(Appointment currentAppointment : appointments){
             boolean userExisted = false;
             if(users.size() == 0){
-                users.add(new userTotals(currentAppointment.getUserName()));
+                users.add(new UserTotals(currentAppointment.getUserName()));
             }
             else{
                 for(int i = 0; i < users.size(); i++){
@@ -115,7 +117,7 @@ public class ReportsController implements Initializable {
                     }
                 }
                 if(!userExisted){
-                    users.add(new userTotals(currentAppointment.getUserName()));
+                    users.add(new UserTotals(currentAppointment.getUserName()));
                 }
             }
         }

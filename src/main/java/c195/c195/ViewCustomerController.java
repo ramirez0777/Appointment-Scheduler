@@ -1,5 +1,7 @@
 package c195.c195;
 
+import c195.c195.displayed.Appointment;
+import c195.c195.displayed.Customer;
 import helper.Queries;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

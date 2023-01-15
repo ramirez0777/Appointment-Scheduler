@@ -1,7 +1,7 @@
-package c195.c195;
+package c195.c195.reported;
 
 /**Type class is used for the reports screen. Keeps track of types used in appointments and how many of each*/
-public class Type {
+public class Type extends ReportType{
     private String type;
     private int total;
 
@@ -10,7 +10,7 @@ public class Type {
      * */
     public Type(String type){
         this.type = type;
-        total = 1;
+        this.total = 1;
     }
 
     /**Returns type
@@ -18,17 +18,5 @@ public class Type {
      * */
     public String getType(){
         return this.type;
-    }
-
-    /**Returns total
-     * @return Returns the total of this type.
-     * */
-    public int getTotal(){
-        return this.total;
-    }
-
-    /**Increases total by 1*/
-    public void incrementTotal(){
-        total += 1;
     }
 }

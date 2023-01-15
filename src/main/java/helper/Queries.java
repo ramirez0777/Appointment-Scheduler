@@ -1,6 +1,8 @@
 package helper;
 
 import c195.c195.*;
+import c195.c195.displayed.Appointment;
+import c195.c195.displayed.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

@@ -1,14 +1,13 @@
 package c195.c195;
 
+import c195.c195.displayed.Appointment;
+import c195.c195.displayed.Customer;
 import helper.Queries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
@@ -27,6 +26,8 @@ public class MainMenuController implements Initializable {
     public TableColumn location;
     /**List of Customers to be displayed on customersTable*/
     public ObservableList<Customer> customersList = FXCollections.observableArrayList();
+    /**Text Field for user to search customers by name.**/
+    public TextField customerSearch;
 
     /**When screen is initialized it fills in the table with all the customers*/
     @Override
@@ -103,5 +104,18 @@ public class MainMenuController implements Initializable {
     /**Switches back to the all appointments screen*/
     public void toAllAppointments() throws IOException{
         LoginScreen.changeScreen("allappointments");
+    }
+
+    /**When a user types in textbox and clicks enter it will search the customer list for names that contain the string inputted. It will then refresh the customer table with the results.**/
+    public void searchCustomer() {
+        String search = customerSearch.getText();
+        ObservableList<Customer> customersSearched = FXCollections.observableArrayList();
+
+        for(Customer customer : customersList){
+            if(customer.getName().toLowerCase().contains(search.toLowerCase())){
+                customersSearched.add(customer);
+            }
+        }
+        customersTable.setItems(customersSearched);
     }
 }

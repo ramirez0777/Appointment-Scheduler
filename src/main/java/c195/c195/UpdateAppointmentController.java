@@ -1,5 +1,6 @@
 package c195.c195;
 
+import c195.c195.displayed.Appointment;
 import helper.Queries;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -125,7 +126,7 @@ public class UpdateAppointmentController implements Initializable {
         LocalDateTime endLDT = LoginScreen.convertToLDT(endDate.getValue().toString(), et);
 
         if(!LoginScreen.isCompanyOpen(startLDT, endLDT)){
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a Date & Time on a weekday between 8am - 10pm EST.");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a Date & Time on a weekday between 8am - 10pm EST and is not in the past.");
             alert.showAndWait();
             return;
         }

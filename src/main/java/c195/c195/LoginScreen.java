@@ -34,6 +34,7 @@ public class LoginScreen extends Application {
         JDBC.closeConnection();
     }
 
+
     /**This method is used to change change screens. Depending on the parameter used it will send you to the appropriate screen and update the title
      * @param newScreen Name of the new page you are going too.
      * */
@@ -215,11 +216,10 @@ public class LoginScreen extends Application {
         }
 
         //Checks if appointment is being made in the past.
-        /** Disabling for performance assesment
         if(startZDT.isBefore(ZonedDateTime.now(ZoneId.of("America/New_York"))) || endZDT.isBefore(ZonedDateTime.now(ZoneId.of("America/New_York")))){
             open = false;
         }
-         */
+
 
         //Checks if appointment end time is before start time
         if(endZDT.isBefore(startZDT)){

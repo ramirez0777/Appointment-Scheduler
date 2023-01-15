@@ -94,7 +94,7 @@ public class NewAppointmentController implements Initializable {
         LocalDateTime endLDT = LoginScreen.convertToLDT(endDate.getValue().toString(), et);
 
         if(!LoginScreen.isCompanyOpen(startLDT, endLDT)){
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a Date & Time on a weekday between 8am - 10pm EST.");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a Date & Time on a weekday between 8am - 10pm EST that is not in the past.");
             alert.showAndWait();
             return;
         }

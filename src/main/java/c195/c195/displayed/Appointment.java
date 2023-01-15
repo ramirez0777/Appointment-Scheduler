@@ -1,5 +1,6 @@
-package c195.c195;
+package c195.c195.displayed;
 
+import c195.c195.LoginScreen;
 import helper.Queries;
 
 import java.sql.SQLException;

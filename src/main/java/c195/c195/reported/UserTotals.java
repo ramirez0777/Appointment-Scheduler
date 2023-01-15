@@ -1,8 +1,8 @@
-package c195.c195;
+package c195.c195.reported;
 
 /**userTotals class is used for the reports screen. Keeps track of user creating appointments and how many they have created.*/
 
-public class userTotals {
+public class UserTotals extends ReportType{
     /**Username of the user being counted.*/
     private String username;
     /**Total times the user has created an appointment.*/
@@ -11,9 +11,9 @@ public class userTotals {
     /**Sets username and sets total to 1
      * @param username Username.
      * */
-    public userTotals(String username){
+    public UserTotals(String username){
         this.username = username;
-        total = 1;
+        this.total = 1;
     }
 
     /**Returns username
@@ -21,17 +21,5 @@ public class userTotals {
      */
     public String getUsername(){
         return this.username;
-    }
-
-    /**Returns total
-     * @return Returns the total.
-     * */
-    public int getTotal(){
-        return this.total;
-    }
-
-    /**Increases total by 1*/
-    public void incrementTotal(){
-        this.total += 1;
     }
 }
