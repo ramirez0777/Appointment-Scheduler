@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"c195.c195","l":"c195.c195"},{"m":"c195.c195","l":"helper"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"c195.c195","l":"c195.c195"},{"m":"c195.c195","l":"c195.c195.displayed"},{"m":"c195.c195","l":"c195.c195.reported"},{"m":"c195.c195","l":"helper"}];updateSearchResults();
